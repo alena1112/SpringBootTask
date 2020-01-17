@@ -3,13 +3,14 @@ package com.task.springboottask.services;
 import com.task.springboottask.model.Product;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ProductStorageService {
     void save(Product product);
 
-    void update(Product product);
+    boolean update(Product product);
 
-    void remove(Product product);
+    boolean remove(UUID id);
 
     List<Product> getAllProducts();
 
