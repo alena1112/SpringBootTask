@@ -1,10 +1,12 @@
 package com.task.springboottask.rest;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
-@Getter
 public class TokenResponse {
-    private final String token;
+    private String token;
 }
