@@ -12,8 +12,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private GrantedAuthority adminRole = new SimpleGrantedAuthority("admin");
-    private GrantedAuthority readOnlyRole = new SimpleGrantedAuthority("readOnly");
+    private GrantedAuthority adminRole = new SimpleGrantedAuthority("ROLE_ADMIN");
+    private GrantedAuthority readOnlyRole = new SimpleGrantedAuthority("ROLE_READ_ONLY");
 
     private List<UserDetails> users = Arrays.asList(
             new User("admin", "root", Collections.singletonList(adminRole)),
