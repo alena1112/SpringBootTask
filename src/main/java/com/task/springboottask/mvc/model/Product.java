@@ -1,4 +1,4 @@
-package com.task.springboottask.model;
+package com.task.springboottask.mvc.model;
 
 import lombok.Builder;
 import lombok.Data;

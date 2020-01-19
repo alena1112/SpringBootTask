@@ -1,6 +1,6 @@
 package com.task.springboottask.services;
 
-import com.task.springboottask.model.Product;
+import com.task.springboottask.mvc.model.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

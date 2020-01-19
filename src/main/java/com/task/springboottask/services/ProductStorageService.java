@@ -1,6 +1,6 @@
 package com.task.springboottask.services;
 
-import com.task.springboottask.model.Product;
+import com.task.springboottask.mvc.model.Product;
 
 import java.util.List;
 import java.util.UUID;

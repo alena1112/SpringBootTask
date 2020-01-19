@@ -1,6 +1,6 @@
-package com.task.springboottask.controllers;
+package com.task.springboottask.mvc.controllers;
 
-import com.task.springboottask.model.Product;
+import com.task.springboottask.mvc.model.Product;
 import com.task.springboottask.services.ProductStorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
