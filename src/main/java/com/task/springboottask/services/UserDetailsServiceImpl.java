@@ -1,5 +1,7 @@
 package com.task.springboottask.services;
 
+import com.task.springboottask.mvc.model.UserRole;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -12,18 +14,34 @@ import java.util.Collections;
 import java.util.List;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private GrantedAuthority adminRole = new SimpleGrantedAuthority("ROLE_ADMIN");
-    private GrantedAuthority readOnlyRole = new SimpleGrantedAuthority("ROLE_READ_ONLY");
+    @Value("${admin.name}")
+    private String adminName;
 
-    private List<UserDetails> users = Arrays.asList(
-            new User("admin", "root", Collections.singletonList(adminRole)),
-            new User("client", "client", Collections.singletonList(readOnlyRole)));
+    @Value("${admin.password}")
+    private String adminPassword;
+
+    @Value("${client.name}")
+    private String clientName;
+
+    @Value("${client.password}")
+    private String clientPassword;
+
+    private List<UserDetails> users;
 
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+        loadUsers();
         return users.stream()
                 .filter(user -> user.getUsername().equals(name))
                 .findFirst()
                 .orElse(null);
+    }
+
+    private void loadUsers() {
+        if (users == null) {
+            users = Arrays.asList(
+                    new User(adminName, adminPassword, Collections.singletonList(new SimpleGrantedAuthority(UserRole.ADMIN))),
+                    new User(clientName, clientPassword, Collections.singletonList(new SimpleGrantedAuthority(UserRole.READ_ONLY))));
+        }
     }
 }

@@ -26,6 +26,7 @@ public class ProductController {
                                  @RequestParam(value = "brand", required = false) String brand,
                                  @RequestParam(value = "price", required = false) Double price,
                                  @RequestParam(value = "quantity", required = false) Integer quantity) {
+        log.info(String.format("Creating a new product %s", name));
         Product product = Product.builder()
                 .id(UUID.randomUUID())
                 .name(name)
@@ -43,6 +44,7 @@ public class ProductController {
                                  @RequestParam(value = "brand", required = false) String brand,
                                  @RequestParam(value = "price", required = false) Double price,
                                  @RequestParam(value = "quantity", required = false) Integer quantity) {
+        log.info(String.format("Updating product %s", name));
         Product product = Product.builder()
                 .id(id)
                 .name(name)
@@ -55,26 +57,31 @@ public class ProductController {
 
     @GetMapping("/remove")
     public Boolean removeProduct(@RequestParam(value = "id") UUID id) {
+        log.info(String.format("Removing product with id %s", id));
         return productStorageService.remove(id);
     }
 
     @GetMapping("/getByName")
     public Product getProductByName(@RequestParam(value = "name") String name) {
+        log.info(String.format("Getting product by name %s", name));
         return productStorageService.getProductByName(name);
     }
 
     @GetMapping("/getByBrand")
     public Product getProductByBrand(@RequestParam(value = "brand") String brand) {
+        log.info(String.format("Getting product by brand %s", brand));
         return productStorageService.getProductByBrand(brand);
     }
 
     @GetMapping("/all")
     public List<Product> getAllProducts() {
+        log.info("Getting all products");
         return productStorageService.getAllProducts();
     }
 
     @GetMapping("/leftovers")
     public List<Product> getAllLeftovers() {
+        log.info("Getting all leftover products");
         return productStorageService.getAllLeftovers();
     }
 }

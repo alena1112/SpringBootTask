@@ -7,19 +7,18 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.stream.Collectors;
 
-//TODO create thread-safe class
 public class ProductStorageServiceImpl implements ProductStorageService {
     private static final Logger log = LoggerFactory.getLogger(ProductStorageServiceImpl.class);
     private Map<UUID, Product> storage = new HashMap<>();
 
     @Override
-    public void save(Product product) {
+    public synchronized void save(Product product) {
         storage.put(product.getId(), product);
         log.info(String.format("Product %s was saved successfully", product.getName()));
     }
 
     @Override
-    public boolean update(Product product) {
+    public synchronized boolean update(Product product) {
         if (storage.containsKey(product.getId())) {
             storage.put(product.getId(), product);
             log.info(String.format("Product %s was updated successfully", product.getName()));
@@ -29,7 +28,7 @@ public class ProductStorageServiceImpl implements ProductStorageService {
     }
 
     @Override
-    public boolean remove(UUID id) {
+    public synchronized boolean remove(UUID id) {
         if (storage.remove(id) != null) {
             log.info(String.format("Product %s was removed successfully", id));
             return true;
@@ -40,12 +39,12 @@ public class ProductStorageServiceImpl implements ProductStorageService {
     }
 
     @Override
-    public List<Product> getAllProducts() {
+    public synchronized List<Product> getAllProducts() {
         return new ArrayList<>(storage.values());
     }
 
     @Override
-    public List<Product> getAllLeftovers() {
+    public synchronized List<Product> getAllLeftovers() {
         return storage.values()
                 .stream()
                 .filter(product -> product.getQuantity() == null || product.getQuantity() < 5)
@@ -53,7 +52,7 @@ public class ProductStorageServiceImpl implements ProductStorageService {
     }
 
     @Override
-    public Product getProductByName(String name) {
+    public synchronized Product getProductByName(String name) {
         return storage.values()
                 .stream()
                 .filter(product -> product.getName().equals(name))
@@ -62,7 +61,7 @@ public class ProductStorageServiceImpl implements ProductStorageService {
     }
 
     @Override
-    public Product getProductByBrand(String brand) {
+    public synchronized Product getProductByBrand(String brand) {
         return storage.values()
                 .stream()
                 .filter(product -> product.getBrand() != null && product.getBrand().equals(brand))

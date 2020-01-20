@@ -1,30 +1,58 @@
 package com.task.springboottask.services;
 
 import com.task.springboottask.mvc.model.Product;
+import com.task.springboottask.mvc.model.UserRole;
 import org.springframework.security.access.annotation.Secured;
 
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Class for storage and manage products
+ *
+ */
 public interface ProductStorageService {
-    @Secured("ROLE_ADMIN")
+    /**
+     * Create new product only for users with Admin role
+     */
+    @Secured(UserRole.ADMIN)
     void save(Product product);
 
-    @Secured("ROLE_ADMIN")
+    /**
+     * Update exist product only for users with Admin role
+     * @return true if product was updated successfully. Otherwise false
+     */
+    @Secured(UserRole.ADMIN)
     boolean update(Product product);
 
-    @Secured("ROLE_ADMIN")
+    /**
+     * Delete exist product only for users with Admin role
+     * @return true if product was deleted successfully. Otherwise false
+     */
+    @Secured(UserRole.ADMIN)
     boolean remove(UUID id);
 
-    @Secured({"ROLE_ADMIN", "ROLE_READ_ONLY"})
+    /**
+     * @return all products for users with Admin or read only role
+     */
+    @Secured({UserRole.ADMIN, UserRole.READ_ONLY})
     List<Product> getAllProducts();
 
-    @Secured({"ROLE_ADMIN", "ROLE_READ_ONLY"})
+    /**
+     * @return all products which quantity is less than 5. Method works for users with Admin or read only role
+     */
+    @Secured({UserRole.ADMIN, UserRole.READ_ONLY})
     List<Product> getAllLeftovers();
 
-    @Secured({"ROLE_ADMIN", "ROLE_READ_ONLY"})
+    /**
+     * @return exist product by name. Method works for users with Admin or read only role
+     */
+    @Secured({UserRole.ADMIN, UserRole.READ_ONLY})
     Product getProductByName(String name);
 
-    @Secured({"ROLE_ADMIN", "ROLE_READ_ONLY"})
+    /**
+     * @return exist product by brand. Method works for users with Admin or read only role
+     */
+    @Secured({UserRole.ADMIN, UserRole.READ_ONLY})
     Product getProductByBrand(String brand);
 }
